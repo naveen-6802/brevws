@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Invoice Generator</title>
+  <meta name="description" content="Brevws is a free online invoice generator and professional invoice maker for freelancers and small businesses. Create invoices online, download PDF invoices, handle taxes (GST/VAT), and multiple currencies no signup required.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0EA5E9">
+  <link rel="canonical" href="https://brevws.live/invoice-generator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Invoice Generator">
+  <meta property="og:title" content="Invoice Generator">
+  <meta property="og:description" content="Create professional invoices online for free. Simple, fast, customizable invoice maker for freelancers, startups, and small businesses. No signup.">
+  <meta property="og:url" content="https://brevws.live/invoice-generator.html">
+  <meta property="og:image" content="https://brevws.live/og.png">
+  <link rel="icon" href="f32.ico" type="image/gif" sizes="32x32" />
+  <link rel="icon" href="f64.ico" type="image/gif" sizes="64x64" />
+  <link rel="icon" href="f128.ico" type="image/gif" sizes="128x128" />
+  <meta property="og:image:alt" content="Brevws - Free Invoice Generator">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free Invoice Generator | Business Invoices - Brevws">
+  <meta name="twitter:description" content="Create professional invoices online for free in minutes. Perfect for freelancers and small businesses.">
+  <meta name="twitter:image" content="https://brevws.live/og.png">
+  <meta name="keywords" content="invoice, invoices, invoicing, invoice generator, invoice maker, online invoice, free invoice template, professional invoice, simple invoice software, billing software, create invoice online, generate invoice, invoice creator, PDF invoice, invoice download, tax invoice, GST invoice, VAT invoice, recurring invoices, small business invoicing, freelancer invoice, business invoice, invoice app, invoice tool, estimate, quotation, quote, receipt generator, client billing, multi-currency invoices, proforma invoice, commercial invoice, e-invoice, electronic invoice, timesheet invoice, consulting invoice, contractor invoice, sales invoice, service invoice, purchase order, payment terms, net 30, accounts receivable, billing system">
+  
+  <style>
+    :root{
+      --color-primary:#0EA5E9;
+      --color-accent:#10B981;
+      --color-bg:#FFFFFF;
+      --color-text:#111827;
+      --color-surface:#F3F4F6;
+      --radius:12px;
+      --shadow:0 10px 20px rgba(17,24,39,0.06); /* uses text color as base at low alpha */
+      --maxw:1120px;
+    }
+    /* Typography: single system font family; accessible sizing/spacing */
+    html{box-sizing:border-box}
+    *,*::before,*::after{box-sizing:inherit}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Noto Sans',Arial,'Apple Color Emoji','Segoe UI Emoji';
+      line-height:1.6;
+      color:var(--color-text);
+      background:var(--color-bg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    h1,h2,h3,h4{ line-height:1.25; margin:0 0 .5rem 0; font-weight:750; letter-spacing:-0.02em }
+    p{ margin:0 0 1rem 0 }
+    a{ color:var(--color-primary); text-decoration:underline; text-underline-offset:2px }
+    a.button{ text-decoration:none }
+    .muted{ color:rgba(17,24,39,0.7) } /* muted from text with alpha */
+    .container{ max-width:var(--maxw); margin:0 auto; padding:0 16px }
+    .text-balance{ text-wrap:balance }
+    .sr-only{
+      position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+      clip:rect(0,0,0,0); white-space:nowrap; border:0;
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      background:rgba(255,255,255,0.85); backdrop-filter:saturate(180%) blur(10px);
+      border-bottom:1px solid var(--color-surface);
+    }
+    .mobile {
+      display: none;
+    }
+    .nav{ display:flex; align-items:center; justify-content:space-between; height:64px }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.125rem; color:var(--color-text); text-decoration:none }
+    .logo{
+      width:28px; height:28px; border-radius:8px; display:inline-grid; place-items:center; color:#fff;
+      background:var(--color-primary);
+      box-shadow:var(--shadow)
+    }
+    .menu{ display:flex; align-items:center; gap:20px }
+    .menu a{ color:var(--color-text); text-decoration:none; font-weight:600 }
+    .cta{ display:flex; align-items:center; gap:10px }
+
+    .button{
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:12px 16px; border-radius:10px; border:1px solid transparent; cursor:pointer;
+      font-weight:700; font-size:.95rem;
+      transition:transform .05s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease
+    }
+    .button-primary{
+      background:var(--color-primary); color:#fff; box-shadow:var(--shadow)
+    }
+    .button-primary:hover{ filter:brightness(0.95) }
+    .button-ghost{
+      background:#fff; border-color:var(--color-surface); color:var(--color-text)
+    }
+    .button-ghost:hover{ filter:brightness(0.98) }
+
+    .social{ display:flex; gap:10px }
+    .social a{ display:inline-grid; place-items:center; width:40px; height:40px; border-radius:999px; border:1px solid var(--color-surface); background:#fff }
+
+    /* Mobile nav */
+    .hamburger{ display:none; background:transparent; border:0 }
+    .hamburger svg{ width:24px; height:24px }
+    @media (max-width: 900px){
+      .menu{ display:none }
+      .hamburger{ display:inline-grid; place-items:center }
+      .mobile{ display:none; position:absolute; inset:64px 0 auto 0; background:#fff; border-bottom:1px solid var(--color-surface) }
+      .mobile a{ display:block; padding:12px 16px; text-decoration:none; color:var(--color-text); font-weight:600; border-top:1px solid var(--color-surface) }
+      .mobile.open{ display:block }
+      .cta{ display:none }
+    }
+
+    /* Hero */
+    .hero{ padding:56px 0 }
+    .hero-wrap{
+      display:grid; gap:20px; grid-template-columns:1.2fr .8fr; align-items:center;
+      background:var(--color-surface); border:1px solid var(--color-surface); border-radius:var(--radius); padding:28px; box-shadow:var(--shadow)
+    }
+    .hero h1{ font-size:clamp(1.8rem, 3vw, 2.6rem) }
+    .lead{ font-size:1.1rem; color:rgba(17,24,39,0.75) }
+    .badge{
+      display:inline-flex; gap:8px; align-items:center; font-weight:700; color:var(--color-primary);
+      background:rgba(14,165,233,0.12); border:1px solid rgba(14,165,233,0.22);
+      padding:6px 10px; border-radius:999px; font-size:.85rem
+    }
+    .hero-cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:10px }
+    .mini{ font-size:.85rem; color:rgba(17,24,39,0.7) }
+    .hero-card{
+      background:#fff; border:1px solid var(--color-surface); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)
+    }
+    .hero-list{ display:grid; gap:10px }
+    .check{ color:var(--color-accent) }
+
+    /* Sections */
+    section{ padding:48px 0 }
+    .grid{ display:grid; gap:16px }
+    .grid-3{ grid-template-columns:repeat(3,1fr) }
+    @media (max-width: 900px){
+      .hero-wrap{ grid-template-columns:1fr }
+      .grid-3{ grid-template-columns:1fr }
+    }
+    .card{
+      background:#fff; border:1px solid var(--color-surface); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)
+    }
+    .card h3{ font-size:1.05rem }
+    .kicker{ font-weight:800; color:var(--color-primary); text-transform:uppercase; letter-spacing:.08em; font-size:.8rem; margin-bottom:6px }
+
+    /* SEO Keywords block (visible, non-spammy) */
+    .seo-keywords{
+      background:var(--color-surface); border:1px dashed var(--color-surface); border-radius:var(--radius); padding:16px; color:rgba(17,24,39,0.75); font-size:.95rem
+    }
+    .seo-keywords strong{ color:var(--color-text) }
+
+    /* FAQ */
+    details{ background:#fff; border:1px solid var(--color-surface); border-radius:12px; padding:14px 16px }
+    summary{ cursor:pointer; font-weight:700; outline:none }
+    details + details{ margin-top:12px }
+
+    /* Footer */
+    footer{ padding:32px 0; border-top:1px solid var(--color-surface); background:#fff }
+    .footer-line{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap }
+    .footer-links{ display:flex; gap:16px; flex-wrap:wrap }
+    .copyright{ color:rgba(17,24,39,0.7); font-size:.9rem }
+
+    /* Focus styles */
+    :focus-visible{ outline:3px solid rgba(14,165,233,0.5); outline-offset:2px; border-radius:8px }
+  </style>
+  <link rel="stylesheet" href="styles.css" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8616619310514522"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="sr-only" href="#main">Skip to content</a>
+
+  <header role="banner" aria-label="Site header">
+    <div class="container nav" role="navigation" aria-label="Main">
+      <a href="#top" class="brand" aria-label="Brevws home">
+        <span class="logo" aria-hidden="true">B</span>
+        <span>Brevws</span>
+      </a>
+      <nav class="menu" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#why">Why Brevws</a>
+        <a href="#who">Who It’s For</a>
+        <a href="#faq">FAQ</a>
+        <a href="#keywords">Keywords</a>
+      </nav>
+      <div class="cta">
+        <a class="button button-ghost" href="https://brevws.live" target="_blank" rel="noopener noreferrer">Visit Brevws</a>
+        <a class="button button-primary" href="https://brevws.live/" target="_blank" rel="noopener noreferrer" aria-label="Launch Brevws free invoice generator">Launch Brevws</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-controls="mobile-menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile" role="navigation" aria-label="Mobile">
+      <a href="#features">Features</a>
+      <a href="#why">Why Brevws</a>
+      <a href="#who">Who It’s For</a>
+      <a href="#faq">FAQ</a>
+      <a href="#keywords">Keywords</a>
+      <a href="https://brevws.live" target="_blank" rel="noopener noreferrer">Visit Brevws</a>
+      <a href="https://brevws.live/" target="_blank" rel="noopener noreferrer">Launch Brevws</a>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" id="top">
+      <div class="container">
+        <div class="hero-wrap" role="region" aria-label="Hero">
+          <div>
+            <span class="badge" aria-label="Free forever badge">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+              Free Forever No Sign Up
+            </span>
+            <h1 class="text-balance">Free Invoice Generator for Freelancers & Small Businesses</h1>
+            <p class="lead">Create professional invoices online in minutes. Simple, customizable, and fast. Download PDF invoices, support taxes (GST/VAT), multiple currencies, and recurring invoices - all free.</p>
+            <div class="hero-cta">
+              <a class="button button-primary" href="https://brevws.live/" target="_blank" rel="noopener noreferrer">Launch Brevws</a>
+              <a class="button button-ghost" href="https://brevws.live" target="_blank" rel="noopener noreferrer">Go to Brevws</a>
+            </div>
+            <p class="mini">Trusted by thousands of freelancers, startups, and small businesses.</p>
+          </div>
+          <aside class="hero-card" aria-label="Highlights">
+            <div class="hero-list">
+              <div><span class="check" aria-hidden="true">✔</span> Fast & Simple - generate invoices in a few clicks</div>
+              <div><span class="check" aria-hidden="true">✔</span> Customizable templates, taxes, and currencies</div>
+              <div><span class="check" aria-hidden="true">✔</span> Download professional PDF invoices - no sign-up</div>
+              <div><span class="check" aria-hidden="true">✔</span> Works great on desktop and mobile</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+            <center>
+            <div class="image-card" id="imageCard">
+                <div class="image-container">
+                    <img src="free-invoice-template.webp" id="cardImage" alt="Free Invoice Generator" title="Free Invoice Template" loading="lazy">
+                    <div class="gradient-overlay"></div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title" id="cardTitle">Free Invoice Template</h3>
+                    <p class="card-description" id="cardDescription">Create invoice with brevws free invoice template.</p>
+                </div>
+            </div>
+            </center>
+
+    <section id="why" aria-labelledby="why-title">
+      <div class="container">
+        <p class="kicker">Why Choose Brevws</p>
+        <h2 id="why-title">Brevws – Free Invoice Generator for Freelancers & Small Businesses</h2>
+        <p>Managing invoices shouldn’t feel like a full-time job. That’s why Brevws was created a simple yet powerful Free Invoice Generator that helps freelancers, startups, and small businesses create professional invoices in just a few clicks.</p>
+        <p>With Brevws, you don’t need complicated accounting software or paid subscriptions. Instead, you get a lightweight, easy-to-use Invoice Creator Tool that works right in your browser. Whether you need to create invoice online for a single project or generate dozens of invoices for your clients, Brevws makes the process fast, intuitive, and stress-free.</p>
+      </div>
+    </section>
+ 
+    <section id="features" aria-labelledby="features-title">
+      <div class="container">
+        <p class="kicker">Features that matter</p>
+        <h2 id="features-title">Everything You Need to Bill Like a Pro</h2>
+        <div class="grid grid-3" role="list">
+          <article class="card" role="listitem">
+            <h3>Free Invoice Generator</h3>
+            <p class="muted">No hidden fees, no trial limits. Create unlimited invoices.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Online Invoice Maker</h3>
+            <p class="muted">Create, edit, and download invoices directly from your browser.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Custom Invoice Generator</h3>
+            <p class="muted">Add your branding, client details, taxes, and currency with ease.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Professional Invoice Maker</h3>
+            <p class="muted">Clean, customizable templates that look professional to your clients.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Automated & Recurring</h3>
+            <p class="muted">Duplicate past invoices for recurring clients quickly.</p>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Multi‑Currency & Tax</h3>
+            <p class="muted">Support for multiple currencies and tax formats (GST/VAT).</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="who" aria-labelledby="who-title">
+      <div class="container">
+        <p class="kicker">Who is Brevws for?</p>
+        <h2 id="who-title">Built for Freelancers, Startups, and Small Teams</h2>
+        <div class="grid grid-3">
+          <article class="card">
+            <h3>Freelancers</h3>
+            <p class="muted">A quick, no‑hassle invoice generator app for creatives, developers, and consultants.</p>
+          </article>
+          <article class="card">
+            <h3>Startups</h3>
+            <p class="muted">A simple invoice software solution while you scale.</p>
+          </article>
+          <article class="card">
+            <h3>Small Businesses & Agencies</h3>
+            <p class="muted">Manage multiple clients, currencies, taxes, and polished invoices without heavy accounting software.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="get-started-title">
+      <div class="container">
+        <p class="kicker">Get Started</p>
+        <h2 id="get-started-title" class="text-balance">Create Your First Invoice in Seconds</h2>
+        <p class="lead">With Brevws, creating invoices is as easy as filling out a form. Open the tool, enter your details, and download your invoice instantly. No sign‑up. No extra steps.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:12px">
+          <a class="button button-primary" href="https://brevws.live/" target="_blank" rel="noopener noreferrer">Launch Brevws</a>
+          <a class="button button-ghost" href="https://brevws.live" target="_blank" rel="noopener noreferrer">Go to Brevws</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="keywords" aria-labelledby="keywords-title">
+      <div class="container">
+        <p class="kicker">SEO & Keyword Coverage</p>
+        <h2 id="keywords-title">The Complete Free Invoice Maker for Small Business</h2>
+        <p>Our online invoice creator makes billing clients simple and professional. Whether you’re a consultant, designer, developer, or service provider, you can create invoices online free with our intuitive invoice maker app. Join thousands of small business owners who trust our free invoice generator to handle their billing needs efficiently.</p>
+        <div class="seo-keywords" aria-label="Related invoice keywords">
+          <p><strong>Related terms:</strong> invoice generator, invoice maker, online invoice, free invoice template, professional invoices, simple invoice software, billing software, create invoice online, generate invoice, invoice creator, PDF invoice, invoice download, tax invoice (GST/VAT), recurring invoices, small business invoicing, freelancer invoice, business invoice, invoice app, invoice tool, estimate, quotation, quote, receipt generator, client billing, multi‑currency invoices, proforma invoice, commercial invoice, e‑invoice (electronic invoice), timesheet invoice, consulting invoice, contractor invoice, sales invoice, service invoice, purchase order, payment terms (e.g., net 30), accounts receivable, billing system.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-title">
+      <div class="container">
+        <p class="kicker">FAQ</p>
+        <h2 id="faq-title">Frequently Asked Questions</h2>
+        <details>
+          <summary>Is Brevws really free to use?</summary>
+          <p>Yes. Brevws is a free invoice generator with no hidden fees or trial limits. Create and download unlimited invoices.</p>
+        </details>
+        <details>
+          <summary>Can I download invoices as PDF?</summary>
+          <p>Absolutely. Create professional invoices and download them as PDF with a single click.</p>
+        </details>
+        <details>
+          <summary>Does it support taxes and multiple currencies?</summary>
+          <p>Yes. Add taxes (GST/VAT) and choose from multiple currencies to serve clients globally.</p>
+        </details>
+        <details>
+          <summary>Is there an account or signup required?</summary>
+          <p>No signup is required. Open Brevws, enter your details, and download your invoice instantly.</p>
+        </details>
+      </div>
+    </section>
+
+    <section aria-labelledby="cta-title">
+      <div class="container">
+        <div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap">
+          <div>
+            <h2 id="cta-title" class="text-balance">Start Billing Professionally Today It’s Free</h2>
+            <p class="muted">Generate professional invoices online in minutes. No sign‑up. No hassle.</p>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap">
+            <a class="button button-primary" href="https://brevws.live/" target="_blank" rel="noopener noreferrer">Launch Brevws</a>
+            <a class="button button-ghost" href="https://brevws.live" target="_blank" rel="noopener noreferrer">Visit Brevws</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo" aria-label="Site footer">
+    <div class="container footer-line">
+      <div class="brand" aria-label="Brevws home">
+        <span class="logo" aria-hidden="true">B</span>
+        <span>Brevws</span>
+      </div>
+      <div class="footer-links">
+        <div class="social" aria-label="Social links">
+          <a href="https://instagram.com/brevws" target="_blank" rel="me noopener noreferrer" aria-label="Brevws on Instagram" title="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/>
+              <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+            </svg>
+          </a>
+          <a href="https://linkedin.com/in/brevws" target="_blank" rel="me noopener noreferrer" aria-label="Brevws on LinkedIn" title="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M7 10v7M7 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1M11 17v-4.2a2.3 2.3 0 0 1 4.6 0V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="copyright">© <span id="year"></span> Brevws. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"Is Brevws really free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. Brevws is a free invoice generator with no hidden fees or trial limits."}},
+          {"@type":"Question","name":"Can I download invoices as PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes, you can create professional invoices and download them as PDF with one click."}},
+          {"@type":"Question","name":"Does it support taxes and multiple currencies?","acceptedAnswer":{"@type":"Answer","text":"Yes, Brevws supports taxes (GST/VAT) and multiple currencies for global clients."}},
+          {"@type":"Question","name":"Is there an account or signup required?","acceptedAnswer":{"@type":"Answer","text":"No signup is required. Open Brevws, enter your details, and download your invoice instantly."}}
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    (function(){
+      const yearEl = document.getElementById('year');
+      if(yearEl){ yearEl.textContent = new Date().getFullYear(); }
+
+      const btn = document.getElementById('hamburger');
+      const menu = document.getElementById('mobile-menu');
+      if(btn && menu){
+        btn.addEventListener('click', () => {
+          const open = menu.classList.toggle('open');
+          btn.setAttribute('aria-expanded', String(open));
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

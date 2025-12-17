@@ -1,0 +1,15 @@
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /private/
+
+Allow: /
+Allow: /about.html
+Allow: /terms.html
+Allow: /contact.html
+
+User-agent: Twitterbot
+Allow: /
+
+Sitemap: https://brevws.live/sitemap.xml
